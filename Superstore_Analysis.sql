@@ -50,8 +50,6 @@ FROM dbo.Superstore;
 
 -- ────────────────────────────────────────────────────────────
 -- 1.2 Xu hướng doanh thu theo năm (Revenue Trend)
--- 2017 revenue đỉnh nhưng margin giảm 0.7pp → 'growth at a cost'
--- ────────────────────────────────────────────────────────────
 SELECT
     YEAR(OrderDate)                                      AS [Year],
     COUNT(DISTINCT OrderID)                              AS Orders,
