@@ -1,0 +1,214 @@
+-- ============================================================
+--  SUPERSTORE — T-SQL BUSINESS QUESTIONS
+--  Dataset : Sample_Superstore.csv 
+-- ============================================================
+--
+--  Cột:
+--    [Order ID]      VARCHAR   
+--    [Order Date]    DATE
+--    [Ship Date]     DATE
+--    [Ship Mode]     VARCHAR
+--    [Customer Name] VARCHAR
+--    Segment         VARCHAR   -- Consumer / Corporate / Home Office
+--    Region          VARCHAR   -- West / East / Central / South
+--    Category        VARCHAR   -- Furniture / Office Supplies / Technology
+--    [Sub-Category]  VARCHAR
+--    [Product Name]  VARCHAR
+--    Sales           DECIMAL   
+--    Quantity        INT
+--    Discount        DECIMAL  
+--    Profit          DECIMAL   
+
+-- ============================================================
+--  BQ1
+-- ============================================================
+--
+--  Câu hỏi: Category nào bán nhiều nhất? Category nào lãi nhiều nhất?
+--
+--
+--  Kết quả thực:
+--    Technology => margin tốt nhất trong 3
+--    Furniture  => doanh thu cao nhưng margin thấp nhất trong 3
+--    Office Supplies => trung bình
+--
+--  Insight: Furniture chiếm 32% doanh thu nhưng chỉ đóng góp 6.4%
+--  tổng lợi nhuận. Cần kiểm tra chính sách giảm giá ngành hàng này.
+-- ============================================================
+
+SELECT
+    Category,
+    COUNT(DISTINCT [Order ID])               AS total_orders,
+    ROUND(SUM(Sales),2)                      AS total_sales,
+    ROUND(SUM(Profit),2)                     AS total_profit,
+    ROUND(SUM(Profit) / SUM(Sales) * 100, 1) AS profit_margin_pct
+FROM superstore
+GROUP BY Category
+ORDER BY total_sales DESC;
+
+
+-- ============================================================
+--  BQ2 
+-- ============================================================
+--
+--  Câu hỏi: Sản phẩm nào bán chạy nhất? Chúng có thực sự sinh lời không?
+--
+--
+--  Kết quả thực (Top 5):
+--    #1 Canon imageCLASS 2200 Advanced Copier =>  margin 40.9%
+--    #2 Fellowes PB500 Electric Punch Plastic =>  margin 28.2%
+--    #3 Cisco TelePresence System EX90        =>  LỖ dù top 3 sales
+--    #4 HON 5400 Series Task Chairs           =>  hòa vốn
+--    #5 GBC DocuBind TL300                    =>  margin 11.3%
+--
+--  Insight: Doanh thu cao KHÔNG đảm bảo có lãi.
+--  Cisco TelePresence đứng #3 sales nhưng đang lỗ $1,811.
+-- ============================================================
+
+SELECT TOP 5
+    [Product Name],
+    Category,
+    [Sub-Category],
+    ROUND(SUM(Sales),2)                      AS total_sales,
+    ROUND(SUM(Profit),2)                     AS total_profit,
+    ROUND(SUM(Profit) / SUM(Sales) * 100, 1) AS profit_margin_pct,
+    CASE
+        WHEN SUM(Profit) < 0 THEN 'Lo - can review ngay'
+        WHEN SUM(Profit) = 0 THEN 'Hoa von'
+        ELSE                      'Co lai'
+    END                                      AS status
+FROM superstore
+GROUP BY [Product Name], Category, [Sub-Category]
+ORDER BY total_sales DESC;
+
+
+-- ============================================================
+--  BQ3
+-- ============================================================
+--
+--  Câu hỏi: Có bao nhiêu đơn hàng vừa giảm giá mạnh vừa lỗ?
+--           Chúng phá hủy tổng cộng bao nhiêu lợi nhuận?
+--
+--
+--  Cột Discount: lưu dưới dạng tỉ lệ thập phân
+--
+--  Kết quả thực:
+--    1,140 giao dịch thỏa điều kiện
+--    Tổng lợi nhuận bị phá hủy: -$127,738
+--    Discount trung bình nhóm này: 64.4%
+--    Margin trung bình: -53.6%  (bán $1 lỗ $0.54)
+--
+--  Insight: Áp trần discount 20% cho đơn tiêu chuẩn có thể
+--  thu hồi ước tính +$125,000 lợi nhuận mỗi năm.
+-- ============================================================
+
+--  Table_1: Chi tiết từng giao dịch 
+SELECT
+    [Order ID],
+    [Order Date],
+    [Customer Name],
+    Segment,
+    Region,
+    Category,
+    [Sub-Category],
+    [Product Name],
+    ROUND(Sales, 2) AS sales,
+    Quantity,
+    ROUND(Discount * 100, 0) AS discount_pct,
+    ROUND(Profit, 2) AS profit,
+    ROUND(Profit / NULLIF(Sales, 0) * 100,1) AS margin_pct
+FROM superstore
+WHERE Discount > 0.30
+  AND Profit   < 0
+ORDER BY Profit ASC;
+
+-- Table_2: Tổng hợp thiệt hại
+SELECT
+    COUNT(*)                                 AS so_giao_dich,
+    ROUND(SUM(Profit),2)                     AS tong_lo,
+    ROUND(SUM(Sales),2)                      AS tong_sales_anh_huong,
+    ROUND(SUM(Profit)/SUM(Sales)*100, 1)     AS margin_tb_pct,
+    ROUND(AVG(Discount) * 100,1)             AS discount_tb_pct
+FROM superstore
+WHERE Discount > 0.30
+  AND Profit   < 0;
+
+
+-- ============================================================
+--  BQ4 
+-- ============================================================
+--
+--  Câu hỏi: Khách hàng chủ yếu chọn Ship Mode nào?
+--           Mỗi phương thức giao hàng trung bình mất bao nhiêu ngày?
+--
+--
+--  Kết quả thực:
+--    Standard Class   2,994 đơn   59.8%   avg 5.0 ngày  ← phổ biến nhất, chậm nhất
+--    Second Class       964 đơn   19.2%   avg 3.2 ngày
+--    First Class        787 đơn   15.7%   avg 2.2 ngày
+--    Same Day           264 đơn    5.3%   avg 0 ngày    ← giao ngay
+--
+--  Insight: 60% khách dùng Standard Class (chậm nhất, 5 ngày).
+--  Push Second Class cho đơn >$500 để tăng customer experience.
+-- ============================================================
+
+SELECT
+    [Ship Mode],
+    COUNT(DISTINCT [Order ID])                               AS total_orders,
+    ROUND(
+        COUNT(DISTINCT [Order ID]) * 100.0
+        / SUM(COUNT(DISTINCT [Order ID])) OVER ()
+    , 1)                                                     AS order_pct,
+    ROUND(AVG(DATEDIFF(day, [Order Date], [Ship Date])), 1)  AS avg_ship_days,
+    MIN(DATEDIFF(day, [Order Date], [Ship Date]))            AS min_ship_days,
+    MAX(DATEDIFF(day, [Order Date], [Ship Date]))            AS max_ship_days
+FROM superstore
+GROUP BY [Ship Mode]
+ORDER BY total_orders DESC;
+
+
+-- ============================================================
+--  BQ5 
+-- ============================================================
+--
+--  Câu hỏi: Khu vực nào hoạt động hiệu quả nhất? Khu vực nào cần cải thiện?
+--
+--
+--  Tại sao KHÔNG dùng AVG(Profit/Sales) để tính margin:
+--    Đơn $10   lãi 50%  →  Profit/Sales = 0.50
+--    Đơn $1000 lãi 10%  →  Profit/Sales = 0.10
+--    AVG của 2 dòng = 30%  (sai — đơn $10 được tính ngang đơn $1000)
+--    SUM(Profit)/SUM(Sales) = $510/$1010 = 10.4%  (đúng — weighted by size)
+--
+--  Kết quả thực:
+--    West     $725,458   $108,418   14.9%   => tốt nhất, chuẩn benchmark
+--    East     $678,781    $91,523   13.5%   gap -1.5pp vs West
+--    South    $391,722    $46,749   11.9%   gap -3.0pp vs West
+--    Central  $501,240    $39,706    7.9%   gap -7.0pp vs West => cần cải thiện
+--
+--  Insight: Central có 629 khách, doanh thu $501K, nhưng margin 7.9%.
+--  Nếu nâng Central lên mức West (14.9%): thêm ~$35K profit/năm
+--  mà không cần tăng doanh số. Nguyên nhân nghi ngờ: discount cao hơn
+--  hoặc product mix nhiều Furniture (margin thấp).
+-- ============================================================
+
+SELECT
+    Region,
+    COUNT(DISTINCT [Customer Name])          AS customers,
+    COUNT(DISTINCT [Order ID])               AS orders,
+    ROUND(SUM(Sales),  2)                    AS total_sales,
+    ROUND(SUM(Profit), 2)                    AS total_profit,
+    ROUND(SUM(Profit) / SUM(Sales) * 100, 1) AS profit_margin_pct,
+    ROUND(AVG(Discount) * 100,            1) AS avg_discount_pct,
+    -- Khoảng cách margin so với region tốt nhất
+    ROUND(
+        (MAX(SUM(Profit) / SUM(Sales)) OVER ()
+         - SUM(Profit) / SUM(Sales)) * 100
+    , 1)                                     AS gap_vs_best_pp
+FROM superstore
+GROUP BY Region
+ORDER BY profit_margin_pct DESC;
+
+
+-- ============================================================
+-- END OF FILE
+-- ============================================================
