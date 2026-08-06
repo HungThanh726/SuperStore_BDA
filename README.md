@@ -16,7 +16,7 @@ hoạt động trên 4 khu vực (West, East, Central, South) trong giai đoạn
 
 | # | Câu hỏi | Tool |
 |---|---------|------|
-| BQ1 | Category nào có doanh thu và lợi nhuận cao nhất? | T-SQL |
+| BQ1 | Category nào có doanh thu và lợi nhuận cao nhất? | SQL |
 | BQ2 | Top 5 sản phẩm doanh thu cao nhất — chúng có thực sự sinh lời? | SQL |
 | BQ3 | Có bao nhiêu đơn giảm giá >30% nhưng vẫn lỗ? Thiệt hại bao nhiêu? | SQL |
 | BQ4 | Khách hàng chủ yếu chọn Ship Mode nào? Mỗi mode mất bao nhiêu ngày?  | SQL |
