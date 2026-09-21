@@ -1,8 +1,8 @@
 # Superstore Business Performance Analysis 
 ![Sales & Profit Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20%26%20Profit%20Performance.png)
-![Sales & Profit Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Product%20%26%20Portfolio%20Insights.png)
-![Sales & Profit Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20%26%20Profit%20Performance.png)
-![Sales & Profit Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20%26%20Profit%20Performance.png)
+![Product & Portfolio Insights](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Product%20%26%20Portfolio%20Insights.png)
+![Customer & Operations Analysis](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20%26%20Profit%20Performance.png)
+![Sales YoY Sales Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20YoY%20Sales%20Performance.png)
 > Phân tích hiệu suất kinh doanh và xác định điểm rò rỉ lợi nhuận
 > từ bộ dữ liệu Superstore 4 năm — hướng đến quản trị lợi nhuận bền vững
 
