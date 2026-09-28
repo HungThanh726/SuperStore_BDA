@@ -40,7 +40,7 @@ có thể triển khai ngay mà không cần tăng doanh số.
 
 **Nguồn:** Sample - Superstore (Kaggle)
 **File:** `Sample-Superstore.csv`
-```
+
 | Thuộc tính | Giá trị |
 |-----------|---------|
 | Số dòng | 9,994 |
@@ -87,9 +87,6 @@ có thể triển khai ngay mà không cần tăng doanh số.
 | **Power BI Desktop** | Dashboard tổng quan |
 
 Power BI → Visual & Dashboard
-```
-
----
 
 ## 4. Project Structure
 
