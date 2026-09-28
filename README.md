@@ -71,7 +71,7 @@ có thể triển khai ngay mà không cần tăng doanh số.
 | Profit | DECIMAL | Lợi nhuận |
 
 **Lưu ý kỹ thuật:**
-- Cột `Discount` dạng thập phân: `0.3` = giảm 30% → filter viết `Discount > 0.3`
+- Cột `Discount` dạng thập phân: `0.3` = giảm 30% => filter viết `Discount > 0.3`
 - Đếm đơn hàng: dùng `COUNT(DISTINCT [Order ID])`, không dùng `COUNT(*)`
 - Tính margin: dùng `SUM(Profit) / SUM(Sales)` — không dùng `AVG(Profit/Sales)`
 
@@ -84,24 +84,7 @@ có thể triển khai ngay mà không cần tăng doanh số.
 | **SQL** (SQL Server / SSMS) | BQ1–BQ5 |
 | **Python** | BQ6–BQ10 + Advanced Analytics |
 | **Pandas** | Data manipulation, groupby, pivot |
-| **Scipy** | Z-score anomaly detection |
 | **Power BI Desktop** | Dashboard tổng quan |
-
-**Nguyên tắc phân công tool:**
-
-```
-SQL  → BQ1–BQ5
-         Aggregation, filter, window function
-         Query ngắn, chạy thẳng trong SSMS, kết nối trực tiếp Power BI
-
-Python → BQ6–BQ10 + Advanced
-         Những tác vụ DAX / Power Query xử lý cồng kềnh:
-
-         BQ7     pd.unstack()       thay self-join SQL (15 dòng → 2 dòng)
-         RFM     pd.qcut() × 3      thay RANKX × 9 DAX measures
-         Cohort  groupby+unstack    thay 15+ bước Power Query
-         Anomaly scipy.zscore       DAX không có hàm native
-         CLV     AOV × F × Margin   thay AVERAGEX lồng nhau
 
 Power BI → Visual & Dashboard
 ```
@@ -133,14 +116,10 @@ Superstore-Business-Analysis/
 │       ├── BQ8:  Loyal Customer & VIP Profit Flag
 │       ├── BQ9:  Best Sub-Category per Segment (rank)
 │       ├── BQ10: Order Value Tier by Region
-│       ├── ADV:  RFM Segmentation (pd.qcut scoring)
-│       ├── ADV:  Cohort Retention Matrix
-│       ├── ADV:  Discount Anomaly Detection (Z-score)
-│       ├── ADV:  Customer Lifetime Value (CLV)
 │       └── Export: 7 CSV files → import vào Power BI
 │
 └── dashboard/
-    └── Superstore.pbix                            ← Power BI file (3 pages)
+    └── Superstore.pbix    
 ```
 
 ---
