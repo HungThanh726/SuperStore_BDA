@@ -40,7 +40,7 @@ có thể triển khai ngay mà không cần tăng doanh số.
 
 **Nguồn:** Sample - Superstore (Kaggle)
 **File:** `Sample-Superstore.csv`
-
+```
 | Thuộc tính | Giá trị |
 |-----------|---------|
 | Số dòng | 9,994 |
