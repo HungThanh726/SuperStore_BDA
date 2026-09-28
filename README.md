@@ -270,14 +270,12 @@ Copiers #1 ở **cả 3 Segments**. Home Office + Office Supplies = **20.8% marg
 
 | Mức độ | Hành động | Tác động ước tính | Timeline |
 |--------|-----------|------------------|---------|
-| 🔴 NGUY CẤP | Áp trần discount tối đa **20%** cho đơn tiêu chuẩn | **+$125,000/năm** | Ngay lập tức |
-| 🔴 NGUY CẤP | Re-price hoặc ngừng kinh doanh **Tables** sub-category | **+$35,000/năm** | 1–2 tháng |
-| 🟠 CAO | Audit pricing & discount policy tại **Central region** | ~$35,000/năm | 1 quý |
-| 🟠 CAO | Kiểm tra product mix Furniture tại Central | Phối hợp liên phòng | 1 quý |
-| 🟡 TRUNG BÌNH | Review contract VIP có profit âm (Sean Miller et al.) | Giảm rủi ro | 1 quý |
-| 🟡 TRUNG BÌNH | Đẩy mạnh combo **Home Office + Office Supplies** (20.8%) | **+$28,000/năm** | 1 quý |
-| 🟢 THẤP | Mở rộng danh mục **Copiers & Paper** (margin 37–43%) | **+$20,000/năm** | 2 quý |
-| 🟢 THẤP | Xây dựng loyalty program chính thức từ RFM segments | Tăng retention | 2 quý |
+|  CAO | Audit pricing & discount policy tại **Central region** | ~$35,000/năm | 1 quý |
+|  CAO | Kiểm tra product mix Furniture tại Central | Phối hợp liên phòng | 1 quý |
+|  TRUNG BÌNH | Review contract VIP có profit âm (Sean Miller et al.) | Giảm rủi ro | 1 quý |
+|  TRUNG BÌNH | Đẩy mạnh combo **Home Office + Office Supplies** (20.8%) | **+$28,000/năm** | 1 quý |
+|  THẤP | Mở rộng danh mục **Copiers & Paper** (margin 37–43%) | **+$20,000/năm** | 2 quý |
+|  THẤP | Xây dựng loyalty program chính thức từ RFM segments | Tăng retention | 2 quý |
 
 ```
 Profit hiện tại (avg/năm) :   $286,397
@@ -296,11 +294,6 @@ Profit mục tiêu            :  ~$494,397  (+73%)
 1. Import `data/Sample_-_Superstore.csv` vào SQL Server
 2. Đặt tên bảng là `superstore`
 3. Mở `sql/Superstore_SQL.sql` trong **SSMS**
-
-```sql
--- Kiểm tra load đúng chưa
-SELECT COUNT(*) FROM superstore;   -- kỳ vọng: 9,994
-```
 
 ### Bước 2 — Chạy Python Notebook 
 
