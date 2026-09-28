@@ -266,26 +266,6 @@ Copiers #1 ở **cả 3 Segments**. Home Office + Office Supplies = **20.8% marg
 
 ---
 
-### Advanced — Cohort Retention (Cohort 2014: 595 khách)
-
-| Năm | Active | Retention |
-|-----|--------|-----------|
-| 2014 | 595 | 100.0% |
-| 2015 | 437 | 73.4% |
-| 2016 | 485 | 81.5% |
-| 2017 | 517 | 86.9% |
-
-Retention tăng dần qua các năm → nền tảng khách hàng ngày càng vững.
-
----
-
-### Advanced — CLV
-
-- **155 / 793 customers (19.5%)** có CLV âm → đang phá hủy giá trị
-- Top CLV: Tamara Chand ($8,981), Raymond Buch ($6,976), Sanjit Chand ($5,757)
-
----
-
 ## 6. Business Recommendations
 
 | Mức độ | Hành động | Tác động ước tính | Timeline |
@@ -311,56 +291,19 @@ Profit mục tiêu            :  ~$494,397  (+73%)
 
 ## 7. How to Run / Reproduction
 
-### Yêu cầu
-
-```bash
-pip install pandas numpy scipy
-```
-
-### Bước 1 — Chạy T-SQL (BQ1–BQ5)
+### Bước 1 
 
 1. Import `data/Sample_-_Superstore.csv` vào SQL Server
-   (dùng **Import Wizard** hoặc **BULK INSERT**)
 2. Đặt tên bảng là `superstore`
-3. Mở `sql/Superstore_Junior_TSQL.sql` trong **SSMS**
-4. Chạy từng section BQ1 → BQ5
+3. Mở `sql/Superstore_SQL.sql` trong **SSMS**
 
 ```sql
 -- Kiểm tra load đúng chưa
 SELECT COUNT(*) FROM superstore;   -- kỳ vọng: 9,994
 ```
 
-### Bước 2 — Chạy Python Notebook (BQ6–BQ10 + Advanced)
+### Bước 2 — Chạy Python Notebook 
 
 1. Đặt `Sample_-_Superstore.csv` cùng thư mục với notebook
-2. Mở `notebooks/Superstore_Python_BQ6_10_Advanced.ipynb`
+2. Mở `notebooks/Superstore_Python.ipynb`
 3. Chạy **Kernel → Restart & Run All**
-4. Chạy cell **Export** cuối cùng → xuất 7 file CSV
-
-```python
-# Kiểm tra load đúng chưa
-import pandas as pd
-df = pd.read_csv('Sample_-_Superstore.csv', encoding='latin-1')
-print(df.shape)   # kỳ vọng: (9994, 21)
-```
-
-### Bước 3 — Dựng visual Power BI (BQ6–BQ10)
-
-1. Mở Power BI Desktop
-2. **Get Data → Text/CSV** → import `Sample_-_Superstore.csv`
-   hoặc import 7 file CSV đã export từ notebook
-3. Làm theo hướng dẫn trong `guide/Power_BI_Guide_BQ6_BQ10.md`
-   - DAX measures cần tạo
-   - Visual type + field mapping cho từng BQ
-   - Conditional formatting, slicer, layout dashboard
-
-```
-guide/Power_BI_Guide_BQ6_BQ10.md
-├── DAX measures cơ bản (Total Sales, Profit Margin, v.v.)
-├── BQ6: Stacked Bar + Matrix
-├── BQ7: Line Chart + Column YoY %
-├── BQ8: Scatter + Table VIP Flag
-├── BQ9: Clustered Bar + Heatmap Matrix
-├── BQ10: 100% Stacked Bar + Cross-tab
-└── Layout 3 trang + Slicer + Format số
-
