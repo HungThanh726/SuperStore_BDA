@@ -126,7 +126,7 @@ Superstore-Business-Analysis/
 | FY2016 | $609,206 | $81,795 | 13.4% | 1,315 |
 | FY2017 | $733,215 | $93,439 | 12.7% | 1,687 |
 
-> **FY2017:** Revenue đỉnh nhưng margin giảm 0.7pp → "growth at a cost",
+> **FY2017:** Revenue đỉnh nhưng margin giảm 0.7 so với kỳ trước → "growth at a cost",
 > nghi ngờ do tăng discount để chốt đơn cuối năm.
 
 ---
