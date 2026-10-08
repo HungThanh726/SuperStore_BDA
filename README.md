@@ -69,12 +69,6 @@ có thể triển khai ngay mà không cần tăng doanh số.
 | Quantity | INT | Số lượng |
 | Discount | DECIMAL | Tỉ lệ giảm giá — **lưu dạng 0.3, không phải 30%** |
 | Profit | DECIMAL | Lợi nhuận |
-
-**Lưu ý kỹ thuật:**
-- Cột `Discount` dạng thập phân: `0.3` = giảm 30% => filter viết `Discount > 0.3`
-- Đếm đơn hàng: dùng `COUNT(DISTINCT [Order ID])`, không dùng `COUNT(*)`
-- Tính margin: dùng `SUM(Profit) / SUM(Sales)` — không dùng `AVG(Profit/Sales)`
-
 ---
 
 ## 3. Tech Stack & Tools
@@ -96,10 +90,10 @@ Superstore-Business-Analysis/
 ├── README.md                         
 │
 ├── data/
-│   └── Sample_-_Superstore.csv                
+│   └── Superstore.csv                
 │
 ├── sql/
-│   └── Superstore_SQL.sql                => BQ1–BQ5 
+│   └── Superstore_SQL.sql                
 │       ├── BQ1: Category Sales & Profit
 │       ├── BQ2: Top 5 Products by Revenue
 │       ├── BQ3: Discount >30% AND Loss Orders
@@ -107,7 +101,7 @@ Superstore-Business-Analysis/
 │       └── BQ5: Region Profit Margin Ranking
 │
 ├── notebooks/
-│   └── Superstore_Python_BQ6_10_Advanced.ipynb   => BQ6–BQ10
+│   └── Superstore_Python_BQ6_10_Advanced.ipynb   
 │       ├── BQ6:  Sub-Category % of Category Sales
 │       ├── BQ7:  YoY Monthly Revenue 2017 vs 2016
 │       ├── BQ8:  Loyal Customer & VIP Profit Flag
@@ -130,7 +124,7 @@ Superstore-Business-Analysis/
 | FY2014 | $484,247 | $49,544 | 10.2% | 969 |
 | FY2015 | $470,533 | $61,619 | 13.1% | 1,038 |
 | FY2016 | $609,206 | $81,795 | 13.4% | 1,315 |
-| FY2017 | $733,215 | $93,439 | 12.7% ⚠️ | 1,687 |
+| FY2017 | $733,215 | $93,439 | 12.7% | 1,687 |
 
 > **FY2017:** Revenue đỉnh nhưng margin giảm 0.7pp → "growth at a cost",
 > nghi ngờ do tăng discount để chốt đơn cuối năm.
@@ -143,7 +137,7 @@ Superstore-Business-Analysis/
 |----------|-------|---------|--------|--------|
 | Technology | $836,154 | 36.4% | $145,455 | **17.4%** |
 | Office Supplies | $719,047 | 31.3% | $122,491 | 17.0% |
-| Furniture | $742,000 | **32.3%** | $18,451 | **2.5%** ⚠️ |
+| Furniture | $742,000 | **32.3%** | $18,451 | **2.5%**  |
 
 Furniture chiếm 32% doanh thu nhưng chỉ đóng góp **6.4% tổng lợi nhuận**.
 
@@ -155,7 +149,7 @@ Furniture chiếm 32% doanh thu nhưng chỉ đóng góp **6.4% tổng lợi nhu
 |---|---------|-------|--------|--------|
 | 1 | Canon imageCLASS 2200 Copier | $61,600 | $25,200 | 40.9% |
 | 2 | Fellowes PB500 Punch Machine | $27,453 | $7,753 | 28.2% |
-| 3 | Cisco TelePresence EX90 | $22,638 | **-$1,811** | **-8.0%** ⚠️ |
+| 3 | Cisco TelePresence EX90 | $22,638 | **-$1,811** | **-8.0%** |
 | 4 | HON 5400 Task Chairs | $21,871 | $0 | 0.0% |
 | 5 | GBC DocuBind TL300 | $19,823 | $2,234 | 11.3% |
 
@@ -171,7 +165,7 @@ Doanh thu cao ≠ sinh lời: 2/5 sản phẩm top sales không tạo ra lợi n
 | 1–20% | 3,803 | +$100,785 | ~12% |
 | 21–30% | 227 | -$10,369 | -10.0% |
 | 31–50% | 310 | -$48,447 | ~-26% |
-| **>50%** | **856** | **-$76,559** | **-119%** ⚠️ |
+| **>50%** | **856** | **-$76,559** | **-119%**  |
 
 **1,140 giao dịch** discount >30% và lỗ → phá hủy **-$127,738** lợi nhuận.
 Discount >50%: bán $1.00 lỗ $1.19.
@@ -196,7 +190,7 @@ Discount >50%: bán $1.00 lỗ $1.19.
 | West | $725,458 | $108,418 | **14.9%** | — |
 | East | $678,781 | $91,523 | 13.5% | -1.4pp |
 | South | $391,722 | $46,749 | 11.9% | -3.0pp |
-| Central | $501,240 | $39,706 | **7.9%** | **-7.0pp** ⚠️ |
+| Central | $501,240 | $39,706 | **7.9%** | **-7.0pp**  |
 
 Gap 7pp tại Central ≈ **$35,000 lợi nhuận bị bỏ quên** mỗi năm.
 
@@ -291,12 +285,12 @@ Profit mục tiêu            :  ~$494,397  (+73%)
 
 ### Bước 1 
 
-1. Import `data/Sample_-_Superstore.csv` vào SQL Server
+1. Import `Superstore.csv` vào SQL Server
 2. Đặt tên bảng là `superstore`
 3. Mở `sql/Superstore_SQL.sql` trong **SSMS**
 
 ### Bước 2 — Chạy Python Notebook 
 
-1. Đặt `Sample_-_Superstore.csv` cùng thư mục với notebook
+1. Đặt `Superstore.csv` cùng thư mục với notebook
 2. Mở `notebooks/Superstore_Python.ipynb`
 3. Chạy **Kernel → Restart & Run All**
