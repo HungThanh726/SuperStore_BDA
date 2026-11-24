@@ -1,6 +1,6 @@
 # Superstore Business Performance Analysis 
 ![Sales & Profit Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20%26%20Profit%20Performance.png)
-![Discount Products](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Product%20%26%20Portfolio%20Insights.png)
+![Discount Products](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Discount%20Product.png)
 ![Product & Portfolio Insights](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Product%20%26%20Portfolio%20Insights.png)
 ![Customer & Operations Analysis](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Customer%20%26%20Operations%20Analysis.png)
 ![Sales YoY Sales Performance](https://github.com/HungThanh726/SuperStore_BDA/blob/main/Sales%20YoY%20Sales%20Performance.png)
